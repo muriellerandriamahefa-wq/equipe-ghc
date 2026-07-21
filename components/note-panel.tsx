@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Trash2, X, Tag as TagIcon } from "lucide-react"
 import { RichTextEditor } from "@/components/rich-text-editor"
 import type { Note } from "@/lib/notes"
@@ -27,12 +27,18 @@ export function NotePanel({ note, onChange, onDelete }: Props) {
     onChange({ tags: note.tags.filter((t) => t !== tag) })
   }
 
-  const updated = new Date(note.updatedAt).toLocaleString("fr-FR", {
-    day: "2-digit",
-    month: "short",
-    hour: "2-digit",
-    minute: "2-digit",
-  })
+  // Format the date only on the client to avoid SSR/client timezone mismatches.
+  const [updated, setUpdated] = useState<string>("")
+  useEffect(() => {
+    setUpdated(
+      new Date(note.updatedAt).toLocaleString("fr-FR", {
+        day: "2-digit",
+        month: "short",
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+    )
+  }, [note.updatedAt])
 
   return (
     <div className="mx-auto flex h-full w-full max-w-3xl flex-col overflow-y-auto px-6 py-8 md:px-10">
@@ -124,7 +130,9 @@ export function NotePanel({ note, onChange, onDelete }: Props) {
         placeholder="Décrivez le processus étape par étape..."
       />
 
-      <p className="mt-4 text-xs text-muted-foreground">Dernière modification : {updated}</p>
+      <p className="mt-4 text-xs text-muted-foreground">
+        {updated ? `Dernière modification : ${updated}` : "\u00A0"}
+      </p>
     </div>
   )
 }
