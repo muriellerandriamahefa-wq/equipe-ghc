@@ -43,13 +43,26 @@ export function KbSidebar({
   }, [notes])
 
   return (
-    <aside className="flex h-full w-full flex-col border-r border-sidebar-border bg-sidebar">
-      <div className="flex items-center gap-2 px-4 py-4">
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+    <aside className="relative flex h-full w-full flex-col border-r border-sidebar-border bg-sidebar">
+      {/* Motorcycle parts background, kept faint for readability */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-[0.14] mix-blend-multiply"
+        style={{ backgroundImage: "url(/images/moto-parts-bg.png)" }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-sidebar/20 via-sidebar/45 to-sidebar/70"
+      />
+
+      <div className="relative flex items-center gap-2.5 border-b border-sidebar-border/60 px-4 py-4">
+        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm">
           <Settings className="h-5 w-5" />
         </div>
         <div className="min-w-0 flex-1">
-          <h1 className="truncate font-serif text-base font-semibold text-sidebar-foreground">Equipe GHC</h1>
+          <h1 className="truncate font-serif text-base font-semibold tracking-tight text-sidebar-foreground">
+            Equipe GHC
+          </h1>
           <p className="truncate text-xs text-muted-foreground">Base de connaissances partagée</p>
         </div>
         {onRefresh && (
@@ -58,25 +71,25 @@ export function KbSidebar({
             onClick={onRefresh}
             aria-label="Actualiser les notes"
             title="Actualiser"
-            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-sidebar-border text-muted-foreground transition-colors hover:text-foreground"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-sidebar-border bg-card/60 text-muted-foreground backdrop-blur transition-colors hover:text-foreground"
           >
             <RefreshCw className={cn("h-4 w-4", isRefreshing && "animate-spin")} />
           </button>
         )}
       </div>
 
-      <div className="px-3">
+      <div className="relative px-3 pt-3">
         <button
           type="button"
           onClick={onNew}
-          className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-3 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+          className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-3 py-2 text-sm font-medium text-primary-foreground shadow-sm transition-opacity hover:opacity-90"
         >
           <Plus className="h-4 w-4" />
           Nouvelle note
         </button>
       </div>
 
-      <div className="px-3 pt-3">
+      <div className="relative px-3 pt-3">
         <div className="relative">
           <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <input
@@ -85,7 +98,7 @@ export function KbSidebar({
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder="Rechercher..."
             aria-label="Rechercher dans les notes"
-            className="w-full rounded-lg border border-sidebar-border bg-card py-2 pl-9 pr-8 text-sm text-foreground outline-none placeholder:text-muted-foreground focus:border-ring"
+            className="w-full rounded-lg border border-sidebar-border bg-card/80 py-2 pl-9 pr-8 text-sm text-foreground outline-none backdrop-blur placeholder:text-muted-foreground focus:border-ring"
           />
           {search && (
             <button
@@ -101,7 +114,7 @@ export function KbSidebar({
       </div>
 
       {allTagList.length > 0 && (
-        <div className="flex flex-wrap gap-1.5 px-3 py-3">
+        <div className="relative flex flex-wrap gap-1.5 px-3 py-3">
           {allTagList.map((tag) => {
             const active = activeTags.includes(tag)
             return (
@@ -124,7 +137,7 @@ export function KbSidebar({
         </div>
       )}
 
-      <div className="min-h-0 flex-1 overflow-y-auto px-3 pb-4">
+      <div className="relative min-h-0 flex-1 overflow-y-auto px-3 pb-4">
         {grouped.length === 0 ? (
           <p className="px-2 py-8 text-center text-sm text-muted-foreground">Aucune note trouvée.</p>
         ) : (
@@ -143,10 +156,10 @@ export function KbSidebar({
                         type="button"
                         onClick={() => onSelect(note.id)}
                         className={cn(
-                          "w-full rounded-lg border px-3 py-2 text-left transition-colors",
+                          "w-full rounded-lg border px-3 py-2 text-left backdrop-blur-sm transition-colors",
                           selected
-                            ? "border-primary/40 bg-accent"
-                            : "border-transparent hover:bg-sidebar-accent",
+                            ? "border-primary/40 bg-accent shadow-sm"
+                            : "border-transparent bg-card/50 hover:border-sidebar-border hover:bg-card/80",
                         )}
                       >
                         <p className="truncate text-sm font-medium text-foreground">
