@@ -1,7 +1,7 @@
 "use client"
 
 import { useMemo } from "react"
-import { Search, Plus, BookOpen, X, RefreshCw } from "lucide-react"
+import { Search, Plus, Settings, X, RefreshCw } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { contentToText, type Note } from "@/lib/notes"
 
@@ -46,7 +46,7 @@ export function KbSidebar({
     <aside className="flex h-full w-full flex-col border-r border-sidebar-border bg-sidebar">
       <div className="flex items-center gap-2 px-4 py-4">
         <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-          <BookOpen className="h-5 w-5" />
+          <Settings className="h-5 w-5" />
         </div>
         <div className="min-w-0 flex-1">
           <h1 className="truncate font-serif text-base font-semibold text-sidebar-foreground">Equipe GHC</h1>
