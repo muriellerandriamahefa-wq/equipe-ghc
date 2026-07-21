@@ -1,7 +1,7 @@
 "use client"
 
 import { useMemo } from "react"
-import { Search, Plus, BookOpen, X } from "lucide-react"
+import { Search, Plus, BookOpen, X, RefreshCw } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { contentToText, type Note } from "@/lib/notes"
 
@@ -11,6 +11,8 @@ type Props = {
   selectedId: string | null
   search: string
   activeTags: string[]
+  isRefreshing?: boolean
+  onRefresh?: () => void
   onSearchChange: (value: string) => void
   onToggleTag: (tag: string) => void
   onSelect: (id: string) => void
@@ -23,6 +25,8 @@ export function KbSidebar({
   selectedId,
   search,
   activeTags,
+  isRefreshing,
+  onRefresh,
   onSearchChange,
   onToggleTag,
   onSelect,
@@ -44,10 +48,21 @@ export function KbSidebar({
         <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
           <BookOpen className="h-5 w-5" />
         </div>
-        <div className="min-w-0">
-          <h1 className="truncate font-serif text-base font-semibold text-sidebar-foreground">Base de connaissances</h1>
-          <p className="truncate text-xs text-muted-foreground">Mes processus de traitement</p>
+        <div className="min-w-0 flex-1">
+          <h1 className="truncate font-serif text-base font-semibold text-sidebar-foreground">Equipe GHC</h1>
+          <p className="truncate text-xs text-muted-foreground">Base de connaissances partagée</p>
         </div>
+        {onRefresh && (
+          <button
+            type="button"
+            onClick={onRefresh}
+            aria-label="Actualiser les notes"
+            title="Actualiser"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-sidebar-border text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <RefreshCw className={cn("h-4 w-4", isRefreshing && "animate-spin")} />
+          </button>
+        )}
       </div>
 
       <div className="px-3">

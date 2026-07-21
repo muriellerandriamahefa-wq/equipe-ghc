@@ -14,8 +14,8 @@ const sourceSerif = Source_Serif_4({
 })
 
 export const metadata: Metadata = {
-  title: 'Base de connaissances — Mes processus',
-  description: 'Notez et organisez vos processus de traitement quotidiens : thématiques, sous-titres et contenu.',
+  title: 'Equipe GHC — Base de connaissances',
+  description: 'Base de connaissances partagée de l\'équipe GHC : thématiques, sous-titres et processus de traitement.',
   generator: 'v0.app',
   icons: {
     icon: [
